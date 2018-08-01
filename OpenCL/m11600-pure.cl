@@ -10,7 +10,7 @@
 #include "inc_common.cl"
 #include "inc_hash_sha256.cl"
 
-DECLSPEC void memcat8c_be (u32 w0[4], u32 w1[4], u32 w2[4], u32 w3[4], const u32 len, const u32 append, u32 digest[8])
+DECLSPEC void memcat8c_be (u32 *w0, u32 *w1, u32 *w2, u32 *w3, const u32 len, const u32 append, u32 *digest)
 {
   const u32 func_len = len & 63;
 
@@ -23,13 +23,13 @@ DECLSPEC void memcat8c_be (u32 w0[4], u32 w1[4], u32 w2[4], u32 w3[4], const u32
   #ifdef IS_NV
   const int selector = (0x76543210 >> ((func_len & 3) * 4)) & 0xffff;
 
-  tmp0 = __byte_perm (append, 0, selector);
-  tmp1 = __byte_perm (0, append, selector);
+  tmp0 = hc_byte_perm (append, 0, selector);
+  tmp1 = hc_byte_perm (0, append, selector);
   #endif
 
   #if defined IS_AMD || defined IS_GENERIC
-  tmp0 = amd_bytealign (0, append, func_len);
-  tmp1 = amd_bytealign (append, 0, func_len);
+  tmp0 = hc_bytealign (0, append, func_len);
+  tmp1 = hc_bytealign (append, 0, func_len);
   #endif
 
   u32 carry = 0;

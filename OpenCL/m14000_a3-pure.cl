@@ -53,7 +53,7 @@
 // The underlying mathematical formulas are NOT copyrighted.
 //
 
-#define LUT(a,b,c,d,e) u32 a; asm volatile ("lop3.b32 %0, %1, %2, %3, "#e";" : "=r"(a): "r"(b), "r"(c), "r"(d));
+#define LUT(a,b,c,d,e) u32 a; asm ("lop3.b32 %0, %1, %2, %3, "#e";" : "=r"(a): "r"(b), "r"(c), "r"(d));
 
 DECLSPEC void s1 (const u32 a1, const u32 a2, const u32 a3, const u32 a4, const u32 a5, const u32 a6, u32 *out1, u32 *out2, u32 *out3, u32 *out4)
 {
@@ -1635,7 +1635,7 @@ DECLSPEC void DES (const u32 K00, const u32 K01, const u32 K02, const u32 K03, c
   }
 }
 
-DECLSPEC void transpose32c (u32 data[32])
+DECLSPEC void transpose32c (u32 *data)
 {
   #define swap(x,y,j,m)               \
      t  = ((x) ^ ((y) >> (j))) & (m); \

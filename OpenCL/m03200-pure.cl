@@ -307,10 +307,10 @@ __constant u32a c_sbox3[256] =
 {                                 \
   u32 tmp;                        \
                                   \
-  tmp  = S0[__bfe ((L), 24, 8)];  \
-  tmp += S1[__bfe ((L), 16, 8)];  \
-  tmp ^= S2[__bfe ((L),  8, 8)];  \
-  tmp += S3[__bfe ((L),  0, 8)];  \
+  tmp  = S0[hc_bfe ((L), 24, 8)];  \
+  tmp += S1[hc_bfe ((L), 16, 8)];  \
+  tmp ^= S2[hc_bfe ((L),  8, 8)];  \
+  tmp += S3[hc_bfe ((L),  0, 8)];  \
                                   \
   (R) ^= tmp ^ P[(N)];            \
 }
@@ -370,7 +370,7 @@ __constant u32a c_sbox3[256] =
   L ^= P[17];           \
 }
 
-DECLSPEC void expand_key (u32 E[18], const u32 W[18], const u32 len)
+DECLSPEC void expand_key (u32 *E, const u32 *W, const u32 len)
 {
   u8 *E_cur  = (u8 *) E;
   u8 *E_stop = E_cur + 72;

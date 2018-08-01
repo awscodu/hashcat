@@ -316,10 +316,10 @@ __constant u32a c_pbox[18] =
 {                                   \
   u32 tmp;                          \
                                     \
-  tmp  = S0[__bfe_S ((L), 24, 8)];  \
-  tmp += S1[__bfe_S ((L), 16, 8)];  \
-  tmp ^= S2[__bfe_S ((L),  8, 8)];  \
-  tmp += S3[__bfe_S ((L),  0, 8)];  \
+  tmp  = S0[hc_bfe_S ((L), 24, 8)];  \
+  tmp += S1[hc_bfe_S ((L), 16, 8)];  \
+  tmp ^= S2[hc_bfe_S ((L),  8, 8)];  \
+  tmp += S3[hc_bfe_S ((L),  0, 8)];  \
                                     \
   (R) ^= tmp ^ P[(N)];              \
 }
@@ -371,7 +371,7 @@ __constant u32a c_pbox[18] =
   L ^= P[17];           \
 }
 
-DECLSPEC void sha1_transform (const u32 w0[4], const u32 w1[4], const u32 w2[4], const u32 w3[4], u32 digest[5])
+DECLSPEC void sha1_transform (const u32 *w0, const u32 *w1, const u32 *w2, const u32 *w3, u32 *digest)
 {
   u32 A = digest[0];
   u32 B = digest[1];
